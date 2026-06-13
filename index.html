@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>PINO | Modern Cafe Restaurant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5E8D8;
+            color: #2D1B12;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --dark-brown: #2D1B12;
+            --caramel: #A66A3F;
+            --cream: #F5E8D8;
+            --warm-orange: #D98A41;
+            --soft-gold: #C9A35A;
+            --glass-bg: rgba(255, 255, 245, 0.75);
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.05);
+            --shadow-hover: 0 20px 30px -12px rgba(0,0,0,0.2);
+        }
+
+        @keyframes floatSteam {
+            0% { transform: translateY(0) scale(0.9); opacity: 0.4; }
+            100% { transform: translateY(-40px) scale(1.3); opacity: 0; }
+        }
+        @keyframes floatBean {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            100% { transform: translateY(-70px) rotate(15deg); opacity: 0; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #2D1B12 0%, #4a2c1a 100%);
+            border-radius: 0 0 48px 48px;
+            padding: 2rem 0 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+        }
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+        .logo {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #F5E8D8, #D98A41);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .tagline {
+            font-size: 1.1rem;
+            color: #F5E8D8;
+            margin: 0.5rem 0 1.5rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+        .btn-menu {
+            background: var(--warm-orange);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #2D1B12;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            margin-top: 10px;
+        }
+        .btn-menu:hover {
+            background: #c27938;
+            transform: scale(1.02);
+            color: white;
+        }
+
+        /* floating elements */
+        .steam, .coffee-bean {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .steam {
+            background: radial-gradient(circle, rgba(255,255,245,0.3) 0%, rgba(255,255,245,0) 80%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            bottom: 10px;
+            animation: floatSteam 4s infinite ease-out;
+        }
+        .coffee-bean {
+            font-size: 1.8rem;
+            bottom: 10px;
+            animation: floatBean 6s infinite ease-in;
+        }
+
+        /* Category cards (3D tilt + glow) */
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+gap: 1.5rem;
+            margin: 3rem 0 2rem;
+        }
+        .cat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 1rem 1.8rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(166,106,63,0.2);
+            min-width: 110px;
+            transform-style: preserve-3d;
+        }
+        .cat-card i {
+            font-size: 2.2rem;
+            color: var(--caramel);
+            display: block;
+            margin-bottom: 8px;
+        }
+        .cat-card span {
+            font-weight: 600;
+            color: var(--dark-brown);
+        }
+        .cat-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--warm-orange);
+            box-shadow: 0 20px 28px -12px rgba(217,138,65,0.4);
+            background: rgba(255, 255, 245, 0.9);
+        }
+
+        /* Menu sections */
+        .menu-section {
+            background: white;
+            border-radius: 48px;
+            padding: 2rem 1.5rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+        .menu-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            border-right: 6px solid var(--warm-orange);
+            padding-right: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-brown);
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .menu-item {
+            background: #fffaf5;
+            border-radius: 28px;
+            padding: 0.9rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #f0e0d0;
+            transition: all 0.2s;
+        }
+        .menu-item-name {
+            font-weight: 600;
+        }
+        .menu-item-price {
+            font-weight: 700;
+            color: var(--warm-orange);
+            background: #faeadc;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+        }
+        .scoop-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            background: #F5E8D8;
+            border-radius: 32px;
+            padding: 20px;
+        }
+        .scoop-badge {
+            background: white;
+            border-radius: 60px;
+            padding: 6px 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e2d4c6;
+        }
+        .price-badge {
+            background: var(--dark-brown);
+            color: var(--cream);
+            border-radius: 20px;
+            padding: 4px 12px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+        .detail-panel {
+            background: #ffffffdb;
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .collapsible-trigger {
+            cursor: pointer;
+            background: #f2e2d2;
+            padding: 12px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .hidden-content {
+            display: none;
+            margin-top: 20px;
+        }
+        .show-content {
+            display: block;
+            animation: fadeInUp 0.3s;
+        }
+        hr {
+            margin: 1rem 0;
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to left, #D98A41, transparent);
+        }
+        footer {
+            background: var(--dark-brown);
+            color: var(--cream);
+            border-radius: 32px 32px 0 0;
+            padding: 2rem 1.5rem;
+            margin-top: 3rem;
+        }
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        .social i {
+            font-size: 1.8rem;
+            margin-left: 15px;
+            color: var(--soft-gold);
+        }
+
+        @media (max-width: 640px) {
+            .logo { font-size: 2.5rem; }
+            .cat-card { padding: 0.7rem 1rem; min-width: 85px; }
+            .cat-card i { font-size: 1.7rem; }
+            .menu-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .menu-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="container hero-content">
+        <div class="logo">PINO</div>
+        <div class="tagline">"Flavors that bring you back every time"</div>
+        <button class="btn-menu" id="scrollToMenuBtn">View Menu <i class="fas fa-arrow-down"></i></button>
+    </div>
+    <div id="steamContainer"></div>
+    <div id="beanContainer"></div>
+</div>
+
+<div class="container">
+    <div class="categories" id="categories">
+        <div class="cat-card" data-category="drinks-natural"><i class="fas fa-apple-alt"></i><span>Natural Drinks</span></div>
+        <div class="cat-card" data-category="icecreams"><i class="fas fa-ice-cream"></i><span>Ice Creams</span></div>
+        <div class="cat-card" data-category="scoop"><i class="fas fa-cube"></i><span>Scoop Ice Cream</span></div>
+        <div class="cat-card" data-category="baklava"><i class="fas fa-cookie-bite"></i><span>Baklava</span></div>
+        <div class="cat-card" data-category="hot-drinks"><i class="fas fa-mug-hot"></i><span>Hot Drinks</span></div>
+        <div class="cat-card" data-category="kebab"><i class="fas fa-utensils"></i><span>Turkish Kebab</span></div>
+        <div class="cat-card" data-category="pizza"><i class="fas fa-pizza-slice"></i><span>Pizza</span></div>
+        <div class="cat-card" data-category="sauces"><i class="fas fa-tint"></i><span>Sauces</span></div>
+        <div class="cat-card" data-category="softdrinks"><i class="fas fa-wine-bottle"></i><span>Beverages</span></div>
+    </div>
+    <div id="menuDisplay"></div>
+</div>
+
+<footer>
+    <div class="container footer-grid">
+        <div class="social">
+            <i class="fab fa-instagram"></i> <span>@pino_cafe</span><br><br>
+            <i class="fas fa-phone-alt"></i> <span>+98 21 55541234</span>
+        </div>
+        <div>
+            <i class="fas fa-map-marker-alt"></i> <span>Tehran, Valiasr St, No.123</span><br>
+            <i class="fas fa-clock"></i> <span>9 AM - 12 AM | Every day</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const menuData = {
+        "drinks-natural": {
+            title: "Natural Drinks",
+            items: [
+                { name: "Banana Milk", price: 95000 },
+                { name: "Banana Milk with Ice Cream", price: 120000 },
+                { name: "Carrot Juice", price: 85000 },
+                { name: "Carrot Juice with Ice Cream", price: 110000 },
+                { name: "Cantaloupe Juice", price: 90000 },
+                { name: "Cantaloupe Juice with Ice Cream", price: 115000 },
+                { name: "PINO Special Potion", price: 145000 }
+            ]
+        },
+        "icecreams": {
+            title: "Ice Creams",
+            items: [
+                { name: "Traditional Ice Cream", price: 120000 },
+                { name: "Fruit Ice Cream", price: 110000 },
+                { name: "Chocolate Ice Cream", price: 115000 },
+                { name: "Vanilla Ice Cream", price: 100000 },
+                { name: "PINO Special Ice Cream", price: 135000 }
+            ]
+        },
+        "scoop": {
+            title: "Scoop Ice Cream",
+            flavors: ["Vanilla", "Chocolate", "Nescafe", "Caramel", "Hazelnut", "Pistachio", "Saffron", "Strawberry", "Banana", "Mango", "Coconut", "Blueberry", "Sour Cherry", "Lemon", "Dark Chocolate", "Cookie", "Tiramisu", "Almond", "Bubblegum", "Red Velvet"],
+            prices: { "One Scoop": 65000, "Two Scoops": 120000, "Three Scoops": 170000 }
+        },
+        "baklava": {
+            title: "Baklava",
+            items: [
+                { name: "Pistachio Baklava", price: 75000 },
+                { name: "Walnut Baklava", price: 70000 },
+                { name: "Chocolate Baklava", price: 80000 },
+                { name: "Turkish Baklava", price: 85000 },
+                { name: "PINO Special Baklava", price: 95000 }
+            ]
+        },
+        "hot-drinks": {
+            title: "Hot Drinks",
+            items: ["Espresso", "Double Espresso", "Americano", "Cappuccino", "Latte", "Caramel Latte", "Mocha", "Flat White", "Macchiato", "Irish Coffee", "Turkish Coffee", "French Coffee", "Filter Coffee", "Hot Chocolate", "White Chocolate", "Nescafe", "Masala Chai", "Saffron Tea", "Cinnamon Tea", "Herbal Tea"].map(d => ({ name: d, price: Math.floor(Math.random() * (160000 - 65000 + 1) + 65000) }))
+        },
+        "kebab": {
+            title: "Turkish Kebab",
+            items: [
+                { name: "Chicken Kebab - Small", price: 175000 },
+                { name: "Chicken Kebab - Medium", price: 235000 },
+                { name: "Chicken Kebab - Large", price: 295000 },
+                { name: "Meat Kebab - Small", price: 175000 },
+                { name: "Meat Kebab - Medium", price: 235000 },
+                { name: "Meat Kebab - Large", price: 295000 }
+            ]
+        },
+        "pizza": {
+            title: "Pizza",
+            items: [
+                { name: "Margherita Mini", price: 165000 }, { name: "Margherita Small", price: 235000 }, { name: "Margherita Medium", price: 325000 }, { name: "Margherita Large", price: 495000 },
+                { name: "Pepperoni Mini", price: 175000 }, { name: "Pepperoni Small", price: 245000 }, { name: "Pepperoni Medium", price: 345000 }, { name: "Pepperoni Large", price: 515000 },
+                { name: "Chicken & Mushroom Mini", price: 185000 }, { name: "Chicken & Mushroom Small", price: 255000 }, { name: "Chicken & Mushroom Medium", price: 365000 }, { name: "Chicken & Mushroom Large", price: 535000 },
+                { name: "Meat & Mushroom Mini", price: 185000 }, { name: "Meat & Mushroom Small", price: 255000 }, { name: "Meat & Mushroom Medium", price: 365000 }, { name: "Meat & Mushroom Large", price: 535000 },
+                { name: "PINO Special Mini", price: 195000 }, { name: "PINO Special Small", price: 275000 }, { name: "PINO Special Medium", price: 395000 }, { name: "PINO Special Large", price: 575000 }
+            ]
+        },
+        "sauces": {
+            title: "Sauces",
+            items: [
+                { name: "Ketchup", price: 15000 }, { name: "Mayonnaise", price: 15000 }, { name: "Garlic", price: 18000 },
+                { name: "French", price: 20000 }, { name: "Barbecue", price: 22000 }, { name: "Chili", price: 20000 },
+                { name: "Mustard", price: 15000 }, { name: "Thousand Island", price: 20000 }
+            ]
+        },
+        "softdrinks": {
+            title: "Soft Drinks & Sides",
+            items: [
+                { name: "Coca Cola", price: 25000 }, { name: "Fanta", price: 25000 }, { name: "Sprite", price: 25000 },
+                { name: "Limon Delster", price: 30000 }, { name: "Tropical Delster", price: 30000 }, { name: "Doogh", price: 20000 }, { name: "Mineral Water", price: 15000 }
+            ]
+        }
+    };
+
+    function renderCategory(categoryId) {
+        const container = document.getElementById("menuDisplay");
+        const data = menuData[categoryId];
+        if (!data) return;
+
+        if (categoryId === "scoop") {
+            const flavorsHtml = data.flavors.map(f => `<span class="scoop-badge">${f}</span>`).join('');
+            const priceHtml = Object.entries(data.prices).map(([k, v]) => `<div><strong>${k}:</strong> ${v.toLocaleString()} Toman</div>`).join('');
+            container.innerHTML = `
+                <div class="menu-section">
+                    <div class="menu-title">?? ${data.title} - 20 Flavors</div>
+                    <div class="collapsible-trigger" id="showFlavorsBtn">? Show 20 Ice Cream Flavors ?</div>
+                    <div id="scoopFlavorsPanel" class="hidden-content">
+                        <div class="scoop-list">${flavorsHtml}</div>
+                        <div class="price-badge">${priceHtml}</div>
+                    </div>
+                </div>
+            `;
+            const trigger = document.getElementById("showFlavorsBtn");
+            const panel = document.getElementById("scoopFlavorsPanel");
+            if (trigger) {
+                trigger.onclick = () => {
+                    panel.classList.toggle("show-content");
+                    panel.style.display = panel.classList.contains("show-content") ? "block" : "none";
+                };
+                panel.style.display = "none";
+            }
+        } else {
+            let itemsHtml = data.items.map(item => `
+                <div class="menu-item">
+                    <div class="menu-item-name">${item.name}</div>
+                    <div class="menu-item-price">${item.price.toLocaleString()} Toman</div>
+                </div>
+            `).join('');
+            let icon = "";
+            if (categoryId === "drinks-natural") icon = "??";
+            else if (categoryId === "icecreams") icon = "??";
+            else if (categoryId === "baklava") icon = "??";
+            else if (categoryId === "hot-drinks") icon = "?";
+            else if (categoryId === "kebab") icon = "??";
+            else if (categoryId === "pizza") icon = "??";
+            else if (categoryId === "sauces") icon = "??";
+            else if (categoryId === "softdrinks") icon = "??";
+            
+            container.innerHTML = `
+                <div class="menu-section">
+                    <div class="menu-title">${icon} ${data.title}</div>
+                    <div class="menu-grid">${itemsHtml}</div>
+                </div>
+            `;
+        }
+
+        // Add sauces section for food categories (except sauces and softdrinks)
+        if (categoryId !== "sauces" && categoryId !== "softdrinks") {
+            const saucesData = menuData["sauces"];
+            let sauceHtml = `<hr><div style="margin-top:20px;"><strong>?? Sauces (can be ordered with meal or separately):</strong><br>`;
+            saucesData.items.forEach(ss => {
+                sauceHtml += `<span style="background:#f0e0ce; border-radius:30px; padding:4px 12px; margin:4px; display:inline-block;">${ss.name} ${ss.price.toLocaleString()} Toman</span>`;
+            });
+            sauceHtml += `</div>`;
+            container.insertAdjacentHTML('beforeend', sauceHtml);
+        }
+        
+        if (categoryId === "sauces") {
+            let sauceFull = `<div class="menu-section"><div class="menu-title">?? Sauces (with meal or separate)</div><div class="menu-grid">`;
+            menuData.sauces.items.forEach(s => {
+                sauceFull += `<div class="menu-item"><div class="menu-item-name">${s.name}</div><div class="menu-item-price">${s.price.toLocaleString()} Toman</div></div>`;
+            });
+            sauceFull += `</div><div class="detail-panel">? Can be ordered separately with any meal</div></div>`;
+            container.innerHTML = sauceFull;
+        }
+    }
+
+    // Tilt & Click handlers
+    const cards = document.querySelectorAll('.cat-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 12;
+            const rotateY = (centerX - x) / 12;
+            card.style.transform = `perspective(500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+            card.style.transition = 'transform 0.05s';
+            card.style.boxShadow = '0 18px 32px -10px rgba(217,138,65,0.6)';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(500px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+            card.style.boxShadow = 'var(--shadow-sm)';
+        });
+        card.addEventListener('click', () => {
+            const category = card.getAttribute('data-category');
+            if (category) renderCategory(category);
+            document.getElementById('menuDisplay').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // Create steam and coffee beans
+    function createEffects() {
+        const steamContainer = document.getElementById('steamContainer');
+        const beanContainer = document.getElementById('beanContainer');
+        for (let i = 0; i < 12; i++) {
+            let steam = document.createElement('div');
+            steam.classList.add('steam');
+            steam.style.left = Math.random() * 100 + '%';
+            steam.style.bottom = Math.random() * 60 + 'px';
+            steam.style.animationDelay = Math.random() * 5 + 's';
+            steam.style.width = Math.random() * 60 + 30 + 'px';
+            steam.style.height = steam.style.width;
+            steamContainer.appendChild(steam);
+        }
+        for (let i = 0; i < 8; i++) {
+            let bean = document.createElement('div');
+            bean.classList.add('coffee-bean');
+            bean.innerHTML = '??';
+            bean.style.left = Math.random() * 90 + '%';
+            bean.style.bottom = Math.random() * 50 + 'px';
+            bean.style.animationDuration = 5 + Math.random() * 4 + 's';
+            bean.style.animationDelay = Math.random() * 4 + 's';
+            bean.style.fontSize = '1.4rem';
+            beanContainer.appendChild(bean);
+        }
+    }
+    createEffects();
+
+    document.getElementById('scrollToMenuBtn').addEventListener('click', () => {
+        const catSection = document.getElementById('categories');
+        catSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+            renderCategory("drinks-natural");
+        }, 300);
+    });
+
+    // Default load
+    window.addEventListener('load', () => {
+        renderCategory("drinks-natural");
+    });
+</script>
+</body>
+</html>
